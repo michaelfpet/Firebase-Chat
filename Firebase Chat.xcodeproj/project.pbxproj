@@ -56,15 +56,23 @@
 		F9097CC225CACD7400645067 /* Firebase Chat */ = {
 			isa = PBXGroup;
 			children = (
-				F9097CC325CACD7400645067 /* AppDelegate.swift */,
-				F9097CC525CACD7400645067 /* SceneDelegate.swift */,
+				F9097CD825CACD8000645067 /* Supporting Files */,
 				F9097CC725CACD7400645067 /* ViewController.swift */,
 				F9097CC925CACD7400645067 /* Main.storyboard */,
-				F9097CCC25CACD7500645067 /* Assets.xcassets */,
-				F9097CCE25CACD7500645067 /* LaunchScreen.storyboard */,
 				F9097CD125CACD7500645067 /* Info.plist */,
 			);
 			path = "Firebase Chat";
+			sourceTree = "<group>";
+		};
+		F9097CD825CACD8000645067 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F9097CC325CACD7400645067 /* AppDelegate.swift */,
+				F9097CC525CACD7400645067 /* SceneDelegate.swift */,
+				F9097CCC25CACD7500645067 /* Assets.xcassets */,
+				F9097CCE25CACD7500645067 /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
