@@ -10,5 +10,4 @@ target 'Firebase Chat' do
 pod 'Firebase/Database'
 pod 'Firebase/Auth'
 
-
 end
