@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2zf-7V-AFT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="moU-Oc-8xD">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -57,11 +58,85 @@
                     <navigationItem key="navigationItem" id="zBy-aj-aFe"/>
                     <connections>
                         <outlet property="NameTextField" destination="pwq-Kb-4Ip" id="Apk-4R-KEI"/>
+                        <segue destination="moU-Oc-8xD" kind="show" identifier="Show Messages" id="vFJ-fc-I0q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1031.8840579710145" y="100.44642857142857"/>
+        </scene>
+        <!--Messages Collection View Controller-->
+        <scene sceneID="SaQ-6K-HrB">
+            <objects>
+                <collectionViewController id="moU-Oc-8xD" customClass="MessagesCollectionViewController" customModule="Firebase_Chat" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Hqs-jt-0cq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Tn4-86-tmm">
+                            <size key="itemSize" width="337" height="62"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Message Cell" id="0TK-js-x9H" customClass="MessageCollectionViewCell" customModule="Firebase_Chat" customModuleProvider="target">
+                                <rect key="frame" x="57" y="0.0" width="300" height="36.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="689-NN-q8t">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="36.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8WN-zu-KgW">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="36.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sender and time of sending." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KEU-kV-hdq">
+                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="16"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Message to Send" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9nR-L9-sAw" customClass="MessageLabel" customModule="Firebase_Chat" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="16" width="300" height="20.5"/>
+                                                    <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="300" id="pvf-Nz-2aa"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="8WN-zu-KgW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="689-NN-q8t" secondAttribute="leading" id="0d4-fK-bKT"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8WN-zu-KgW" secondAttribute="trailing" id="4nY-cd-Fb2"/>
+                                        <constraint firstAttribute="bottom" secondItem="8WN-zu-KgW" secondAttribute="bottom" id="5V7-zY-6vh"/>
+                                        <constraint firstItem="8WN-zu-KgW" firstAttribute="leading" secondItem="689-NN-q8t" secondAttribute="leading" id="NuS-Ld-NaU"/>
+                                        <constraint firstItem="8WN-zu-KgW" firstAttribute="top" secondItem="689-NN-q8t" secondAttribute="top" id="Ssl-3r-oMr"/>
+                                        <constraint firstAttribute="trailing" secondItem="8WN-zu-KgW" secondAttribute="trailing" id="jf8-ca-s0s"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="cellLeadingEqualConstraint" destination="NuS-Ld-NaU" id="GbA-QA-3Ke"/>
+                                    <outlet property="cellTrailingEqualConstraint" destination="jf8-ca-s0s" id="C4P-RE-kTi"/>
+                                    <outlet property="cellWidthConstraint" destination="pvf-Nz-2aa" id="7fY-n8-Zwr"/>
+                                    <outlet property="messageLabel" destination="9nR-L9-sAw" id="8aV-jd-lwZ"/>
+                                    <outlet property="senderAndTimeLabel" destination="KEU-kV-hdq" id="B6p-Xw-Ius"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="moU-Oc-8xD" id="5Bj-qm-MZc"/>
+                            <outlet property="delegate" destination="moU-Oc-8xD" id="Rem-Kx-8IA"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="Y00-zP-M9A"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uNt-ZH-Pm5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2024.6376811594205" y="99.776785714285708"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dw7-sm-KNO">
@@ -85,6 +160,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

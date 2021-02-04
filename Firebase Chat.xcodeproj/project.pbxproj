@@ -15,6 +15,11 @@
 		F9097CCD25CACD7500645067 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9097CCC25CACD7500645067 /* Assets.xcassets */; };
 		F9097CD025CACD7500645067 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9097CCE25CACD7500645067 /* LaunchScreen.storyboard */; };
 		F9097CDB25CAD4ED00645067 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9097CDA25CAD4ED00645067 /* GoogleService-Info.plist */; };
+		F9097D2625CAEE4F00645067 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9097D2525CAEE4F00645067 /* Message.swift */; };
+		F9097D2925CAF5C700645067 /* MessagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9097D2825CAF5C700645067 /* MessagesCollectionViewController.swift */; };
+		F9097D2C25CAF69900645067 /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9097D2B25CAF69900645067 /* MessageCollectionViewCell.swift */; };
+		F9097D4525CC03F400645067 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9097D4425CC03F400645067 /* Extensions.swift */; };
+		F9097D4825CC203C00645067 /* MessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9097D4725CC203C00645067 /* MessageLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +35,11 @@
 		F9097CCF25CACD7500645067 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F9097CD125CACD7500645067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9097CDA25CAD4ED00645067 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F9097D2525CAEE4F00645067 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		F9097D2825CAF5C700645067 /* MessagesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewController.swift; sourceTree = "<group>"; };
+		F9097D2B25CAF69900645067 /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCell.swift; sourceTree = "<group>"; };
+		F9097D4425CC03F400645067 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F9097D4725CC203C00645067 /* MessageLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +94,12 @@
 			children = (
 				F9097CD825CACD8000645067 /* Supporting Files */,
 				F9097CC725CACD7400645067 /* LoginViewController.swift */,
+				F9097D4425CC03F400645067 /* Extensions.swift */,
 				F9097CC925CACD7400645067 /* Main.storyboard */,
+				F9097D2B25CAF69900645067 /* MessageCollectionViewCell.swift */,
+				F9097D4725CC203C00645067 /* MessageLabel.swift */,
+				F9097D2525CAEE4F00645067 /* Message.swift */,
+				F9097D2825CAF5C700645067 /* MessagesCollectionViewController.swift */,
 				F9097CDA25CAD4ED00645067 /* GoogleService-Info.plist */,
 				F9097CD125CACD7500645067 /* Info.plist */,
 			);
@@ -217,9 +232,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9097D2C25CAF69900645067 /* MessageCollectionViewCell.swift in Sources */,
+				F9097D2925CAF5C700645067 /* MessagesCollectionViewController.swift in Sources */,
+				F9097D4825CC203C00645067 /* MessageLabel.swift in Sources */,
 				F9097CC825CACD7400645067 /* LoginViewController.swift in Sources */,
 				F9097CC425CACD7400645067 /* AppDelegate.swift in Sources */,
+				F9097D2625CAEE4F00645067 /* Message.swift in Sources */,
 				F9097CC625CACD7400645067 /* SceneDelegate.swift in Sources */,
+				F9097D4525CC03F400645067 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,7 +397,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mfp.michaelfpetersen.Firebase-Chat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -397,7 +417,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mfp.michaelfpetersen.Firebase-Chat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
