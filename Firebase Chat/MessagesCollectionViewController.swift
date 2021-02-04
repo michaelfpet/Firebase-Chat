@@ -138,7 +138,7 @@ extension MessagesCollectionViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension MessagesCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width * Constants.cellsWidthRatio, height: 80)
+        return CGSize(width: view.frame.width * Constants.cellsWidthRatio, height: Constants.cellsDefaultHeight)
     }
 }
 
@@ -233,6 +233,7 @@ extension MessagesCollectionViewController {
         // MARK: View ratios.
         /// How much the cells are moved in from the edge. Making this number smaller moves the messages towards the middle of the screen.
         static let cellsWidthRatio: CGFloat = 0.95
+        static let cellsDefaultHeight: CGFloat = 80.0
         /// The ratio between the messages and views width.
         static let messageWidthRatio: CGFloat = 0.7
         /// A Constant the Collection view cells can be moved above the place for entering a message at the bottom.

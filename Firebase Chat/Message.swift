@@ -27,9 +27,8 @@ struct Message {
     }
     
     /// This is a fail safe version of setValuesForKeys.
-    ///
-    /// Use this instead of setValuesForKeys because it for some reason doesn't work.
     mutating func setValues(withDictionary dictionary: [String: Any]) {
+        // setValuesForKeys because it for some reason doesn't work. and this lets this be a struct instead of a class
         if let senderName = dictionary["senderName"] as? String? {
             self.senderName = senderName
         }
@@ -44,7 +43,7 @@ struct Message {
 
 extension Message {
     struct Constants {
-        // These must match the name of the variables in Message exactly!
+        // These must match the name of the variables in Message exactly, and can cause conflict with the database if changed!
         static let senderString = "senderName"
         static let timestampString = "timestamp"
         static let messageString = "text"

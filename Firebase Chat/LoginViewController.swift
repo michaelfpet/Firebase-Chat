@@ -24,10 +24,9 @@ class LoginViewController: UIViewController {
         passwordTextField.delegate = self
         nameTextField.delegate = self
         
-        errorShowingLabel.isHidden = true
     }
     
-    @IBOutlet weak var errorShowingLabel: UILabel!
+    // MARK: - login or register action
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -41,11 +40,7 @@ class LoginViewController: UIViewController {
         if registerOrLoginSegmentedControl.selectedSegmentIndex == Constants.loginIndex {
             loginUser()
         } else {
-            if !nameTextField.containsText {
-                errorShowingLabel.isHidden = false
-                errorShowingLabel.text = Constants.enterANameError
-                return
-            }
+            guard nameTextField.containsText else { return }
             registerUser()
         }
     }
@@ -69,7 +64,7 @@ class LoginViewController: UIViewController {
             let ref = Database.database().reference().child(Constants.usersString).child(user.uid)
             ref.updateChildValues([Constants.userNameString: name])
             self.name = name
-            self.performSegue(withIdentifier: "Show Messages", sender: self)
+            self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
         }
     }
     
@@ -92,16 +87,18 @@ class LoginViewController: UIViewController {
                 guard let nameDictionary = dataSnapshot.value as? [String: AnyObject] else { return }
                 let name = nameDictionary[Constants.userNameString] as? String
                 self.name = name
-                self.performSegue(withIdentifier: "Show Messages", sender: self)
+                self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
             }
         }
     }
     
     // MARK: - layout
+    
+    /// Called when the state of the segmented controll changes
     @IBAction func accessTypeChanged(_ sender:  UISegmentedControl) {
         view.endEditing(true)
-        UIView.animate(withDuration: 0.4) {
-            if sender.selectedSegmentIndex == 0 {
+        UIView.animate(withDuration: Constants.changeSetupTime) {
+            if sender.selectedSegmentIndex == Constants.loginIndex {
                 self.setupForLogin()
             } else {
                 self.setupForRegister()
@@ -124,7 +121,7 @@ class LoginViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Show Messages" {
+        if segue.identifier == Constants.showMessagesSegueID {
             if let messagesCVC = segue.destination.contents as? MessagesCollectionViewController {
                 // You shouldn't even try to segue unless the person has a name.
                 messagesCVC.personsName = name!
@@ -163,15 +160,18 @@ extension LoginViewController: UITextFieldDelegate {
 
 extension LoginViewController {
     struct Constants {
+        
+        static let showMessagesSegueID = "Show Messages"
+        
         /// The key for the users in the database.
         static let usersString = "users"
         
+        /// The key for a name inside the users in the database.
         static let userNameString = "name"
-        static let userEmailString = "email"
         
-        static let enterANameError = "you must enter a name."
-        static let passwordToShortError = "The password is not long enough."
-        
+        /// The time to use for switching between login and register in the GUI.
+        static let changeSetupTime = 0.4
+                
         /// The index for login in the segmented control
         static let loginIndex = 0
         /// The index for register in the segmented control
