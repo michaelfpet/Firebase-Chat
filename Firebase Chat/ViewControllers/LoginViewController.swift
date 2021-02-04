@@ -25,6 +25,7 @@ class LoginViewController: UIViewController {
         nameTextField.delegate = self
         
     }
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - login or register action
     
@@ -36,6 +37,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var registerOrLoginSegmentedControl: UISegmentedControl!
     
     @IBAction func registerOrLogin(_ sender: UIButton) {
+        view.endEditing(true)
         guard emailTextField.containsText, passwordTextField.containsText else { return }
         if registerOrLoginSegmentedControl.selectedSegmentIndex == Constants.loginIndex {
             loginUser()
@@ -51,11 +53,12 @@ class LoginViewController: UIViewController {
               let name = nameTextField.text else {
             return
         }
-                
+        activityIndicator.startAnimating()
         Auth.auth().createUser(
             withEmail: email,
             password: password
         ) { (authResult, error) in
+            self.activityIndicator.stopAnimating()
             if error != nil {
                 print(error as Any)
                 return
@@ -73,22 +76,27 @@ class LoginViewController: UIViewController {
               let password = passwordTextField.text else {
             return
         }
+        activityIndicator.startAnimating()
         Auth.auth().signIn(
             withEmail: email,
             password: password
         ) { (authResult, error) in
             if error != nil {
                 print(error as Any)
+                self.activityIndicator.stopAnimating()
                 return
             }
-            guard let user = Auth.auth().currentUser else { return }
-            let ref = Database.database().reference().child(Constants.usersString).child(user.uid)
-            ref.observeSingleEvent(of: .value) { (dataSnapshot) in
-                guard let nameDictionary = dataSnapshot.value as? [String: AnyObject] else { return }
-                let name = nameDictionary[Constants.userNameString] as? String
-                self.name = name
-                self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
+            if let user = Auth.auth().currentUser {
+                let ref = Database.database().reference().child(Constants.usersString).child(user.uid)
+                ref.observeSingleEvent(of: .value) { (dataSnapshot) in
+                    guard let nameDictionary = dataSnapshot.value as? [String: AnyObject] else { return }
+                    let name = nameDictionary[Constants.userNameString] as? String
+                    self.name = name
+                    self.activityIndicator.stopAnimating()
+                    self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
+                }
             }
+            self.activityIndicator.stopAnimating()
         }
     }
     

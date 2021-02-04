@@ -30,17 +30,17 @@
                                             <action selector="accessTypeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="ahf-BG-ml2"/>
                                         </connections>
                                     </segmentedControl>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dJ0-pj-dgQ">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dJ0-pj-dgQ">
                                         <rect key="frame" x="0.0" y="31" width="250" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wsd-ue-C8p">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="wsd-ue-C8p">
                                         <rect key="frame" x="0.0" y="65" width="250" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dfi-pt-s3h">
+                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dfi-pt-s3h">
                                         <rect key="frame" x="0.0" y="99" width="250" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -64,6 +64,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="C8q-t1-9nL">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -71,13 +74,16 @@
                             <constraint firstItem="rHp-0b-gbq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3hk-pN-tpi"/>
                             <constraint firstItem="YCL-0f-InF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6wE-fo-qWA"/>
                             <constraint firstItem="rHp-0b-gbq" firstAttribute="top" secondItem="YCL-0f-InF" secondAttribute="bottom" constant="30" id="WbL-Pf-HVb"/>
+                            <constraint firstItem="C8q-t1-9nL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Zla-ht-WQr"/>
                             <constraint firstItem="rHp-0b-gbq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="dOj-cx-jl0"/>
                             <constraint firstItem="YCL-0f-InF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="75" id="jnn-tj-rhl"/>
+                            <constraint firstItem="C8q-t1-9nL" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ryD-Hf-LLK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rHp-0b-gbq" secondAttribute="trailing" constant="8" id="tla-wK-vds"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zBy-aj-aFe"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="C8q-t1-9nL" id="bPL-7A-wQW"/>
                         <outlet property="emailTextField" destination="dJ0-pj-dgQ" id="APG-6w-D0n"/>
                         <outlet property="nameTextField" destination="dfi-pt-s3h" id="WPO-rJ-MAo"/>
                         <outlet property="passwordTextField" destination="wsd-ue-C8p" id="Rxc-7k-0Yv"/>
