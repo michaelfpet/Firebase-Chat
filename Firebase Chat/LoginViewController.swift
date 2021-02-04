@@ -18,25 +18,43 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func done(_ sender: UIButton) {
-        let name = NameTextField.text
-        
-        // Check if the name is valid
-        // if it is, then segue to the screen where it is possible to send messages.
-        
+        if shouldPerformSegue(withIdentifier: "Show Messages", sender: self) {
+            performSegue(withIdentifier: "Show Messages", sender: self)
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        let ref = Database.database().reference(fromURL: "https://fir-chat-1d207-default-rtdb.firebaseio.com/")
     }
+    
+    
+    // MARK: - Navigation
 
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "Show Messages" {
+            if let messagesCVC = segue.destination.contents as? MessagesCollectionViewController {
+                messagesCVC.personsName = NameTextField.text!
+            }
+        }
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "Show Messages", !NameTextField.containsText { return false }
+        return true
+    }
 
 }
 
 extension LoginViewController: UITextFieldDelegate {
-    
-    
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if shouldPerformSegue(withIdentifier: "Show Messages", sender: self) {
+            performSegue(withIdentifier: "Show Messages", sender: self)
+        }
+        return true
+    }
 }
+
