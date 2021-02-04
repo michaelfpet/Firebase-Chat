@@ -93,13 +93,12 @@
 			isa = PBXGroup;
 			children = (
 				F9097CD825CACD8000645067 /* Supporting Files */,
-				F9097CC725CACD7400645067 /* LoginViewController.swift */,
+				F9E4702E25CC620500CC2AEA /* ViewControllers */,
 				F9097D4425CC03F400645067 /* Extensions.swift */,
 				F9097CC925CACD7400645067 /* Main.storyboard */,
 				F9097D2B25CAF69900645067 /* MessageCollectionViewCell.swift */,
 				F9097D4725CC203C00645067 /* MessageLabel.swift */,
 				F9097D2525CAEE4F00645067 /* Message.swift */,
-				F9097D2825CAF5C700645067 /* MessagesCollectionViewController.swift */,
 				F9097CDA25CAD4ED00645067 /* GoogleService-Info.plist */,
 				F9097CD125CACD7500645067 /* Info.plist */,
 			);
@@ -115,6 +114,15 @@
 				F9097CCE25CACD7500645067 /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F9E4702E25CC620500CC2AEA /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F9097CC725CACD7400645067 /* LoginViewController.swift */,
+				F9097D2825CAF5C700645067 /* MessagesCollectionViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
