@@ -10,7 +10,7 @@ import Firebase
 
 class LoginViewController: UIViewController {
 
-    var name: String?
+    var username: String?
     
     @IBAction func unwindToLoginScreen(_ segue: UIStoryboardSegue) {
         try? Auth.auth().signOut()
@@ -19,12 +19,11 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareKeyboard()
-        
         emailTextField.delegate = self
         passwordTextField.delegate = self
         nameTextField.delegate = self
-        
     }
+    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - login or register action
@@ -36,6 +35,7 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var registerOrLoginSegmentedControl: UISegmentedControl!
     
+    /// Tries to either login or register a user depending on the state of the segmented control.
     @IBAction func registerOrLogin(_ sender: UIButton) {
         view.endEditing(true)
         guard emailTextField.containsText, passwordTextField.containsText else { return }
@@ -47,6 +47,7 @@ class LoginViewController: UIViewController {
         }
     }
     
+    /// Registers a new user with the email, password and name provided in the text fields.
     func registerUser() {
         guard let email = emailTextField.text,
               let password = passwordTextField.text,
@@ -66,11 +67,12 @@ class LoginViewController: UIViewController {
             guard let user = Auth.auth().currentUser else { return }
             let ref = Database.database().reference().child(Constants.usersString).child(user.uid)
             ref.updateChildValues([Constants.userNameString: name])
-            self.name = name
+            self.username = name
             self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
         }
     }
     
+    /// tries to login the user with the email and password provided in the text fields.
     func loginUser() {
         guard let email = emailTextField.text,
               let password = passwordTextField.text else {
@@ -91,7 +93,7 @@ class LoginViewController: UIViewController {
                 ref.observeSingleEvent(of: .value) { (dataSnapshot) in
                     guard let nameDictionary = dataSnapshot.value as? [String: AnyObject] else { return }
                     let name = nameDictionary[Constants.userNameString] as? String
-                    self.name = name
+                    self.username = name
                     self.activityIndicator.stopAnimating()
                     self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
                 }
@@ -132,7 +134,7 @@ class LoginViewController: UIViewController {
         if segue.identifier == Constants.showMessagesSegueID {
             if let messagesCVC = segue.destination.contents as? MessagesCollectionViewController {
                 // You shouldn't even try to segue unless the person has a name.
-                messagesCVC.personsName = name!
+                messagesCVC.username = username!
             }
         }
     }

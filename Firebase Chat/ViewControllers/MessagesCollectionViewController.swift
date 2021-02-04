@@ -12,7 +12,7 @@ import Firebase
 
 class MessagesCollectionViewController: UICollectionViewController {
     
-    var personsName = "Michael"
+    var username = "Michael"
     
     var messages = [Message]()
     
@@ -35,9 +35,9 @@ class MessagesCollectionViewController: UICollectionViewController {
     
     lazy var textField: UITextField = {
         let _textField = UITextField()
+        _textField.delegate = self
         _textField.placeholder = Constants.textFieldText
         _textField.translatesAutoresizingMaskIntoConstraints = false
-        _textField.delegate = self
         return _textField
     }()
     
@@ -127,7 +127,7 @@ extension MessagesCollectionViewController {
             messageCell.senderAndTimeLabel.text = message.info
             messageCell.messageLabel.text = message.text
             
-            messageCell.isTrailing = personsName == message.senderName
+            messageCell.isTrailing = username == message.senderName
             messageCell.messageWidth = view.frame.width * Constants.messageWidthRatio
         }
         return cell
@@ -191,7 +191,7 @@ extension MessagesCollectionViewController {
         
         let values = [
             Constants.messageString : textField.text!,
-            Constants.senderString : personsName,
+            Constants.senderString : username,
             Constants.timestampString : timestamp
         ] as [String : Any]
         childRef.updateChildValues(values)
