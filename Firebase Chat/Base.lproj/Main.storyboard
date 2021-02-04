@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,46 +17,79 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4Tp-fM-flZ">
-                                <rect key="frame" x="57" y="396.5" width="300" height="103.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="rHp-0b-gbq">
+                                <rect key="frame" x="82" y="226.5" width="250" height="148"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your name:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zH7-YK-jif">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="20.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pwq-Kb-4Ip">
-                                        <rect key="frame" x="0.0" y="28.5" width="300" height="34"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="nsN-CL-VFw">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="32"/>
+                                        <segments>
+                                            <segment title="Login"/>
+                                            <segment title="Register"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="accessTypeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="ahf-BG-ml2"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dJ0-pj-dgQ">
+                                        <rect key="frame" x="0.0" y="31" width="250" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BAC-EP-bdt">
-                                        <rect key="frame" x="0.0" y="70.5" width="300" height="33"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wsd-ue-C8p">
+                                        <rect key="frame" x="0.0" y="65" width="250" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dfi-pt-s3h">
+                                        <rect key="frame" x="0.0" y="99" width="250" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dmu-Ou-xhI">
+                                        <rect key="frame" x="0.0" y="99" width="250" height="33"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <state key="normal" title="Done"/>
+                                        <state key="normal" title="Login"/>
                                         <connections>
-                                            <action selector="done:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oiX-O8-g5N"/>
+                                            <action selector="registerOrLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5iq-Ry-kaE"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H99-bp-sY8">
+                                        <rect key="frame" x="0.0" y="132" width="250" height="16"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" systemColor="systemRedColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" priority="750" constant="300" id="0mu-y2-0Iy"/>
+                                    <constraint firstAttribute="width" priority="750" constant="250" id="l5W-LG-2EF"/>
                                 </constraints>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login or register" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YCL-0f-InF">
+                                <rect key="frame" x="110" y="163" width="194" height="33.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4Tp-fM-flZ" secondAttribute="trailing" constant="30" id="D4w-Mf-xUM"/>
-                            <constraint firstItem="4Tp-fM-flZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NgN-mo-dbk"/>
-                            <constraint firstItem="4Tp-fM-flZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="fJ1-Er-CVN"/>
-                            <constraint firstItem="4Tp-fM-flZ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="xk1-Z8-1TT"/>
+                            <constraint firstItem="rHp-0b-gbq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3hk-pN-tpi"/>
+                            <constraint firstItem="YCL-0f-InF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6wE-fo-qWA"/>
+                            <constraint firstItem="rHp-0b-gbq" firstAttribute="top" secondItem="YCL-0f-InF" secondAttribute="bottom" constant="30" id="WbL-Pf-HVb"/>
+                            <constraint firstItem="rHp-0b-gbq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="dOj-cx-jl0"/>
+                            <constraint firstItem="YCL-0f-InF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="75" id="jnn-tj-rhl"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rHp-0b-gbq" secondAttribute="trailing" constant="8" id="tla-wK-vds"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zBy-aj-aFe"/>
                     <connections>
-                        <outlet property="NameTextField" destination="pwq-Kb-4Ip" id="Apk-4R-KEI"/>
+                        <outlet property="emailTextField" destination="dJ0-pj-dgQ" id="APG-6w-D0n"/>
+                        <outlet property="errorShowingLabel" destination="H99-bp-sY8" id="wRE-wS-gXX"/>
+                        <outlet property="nameTextField" destination="dfi-pt-s3h" id="WPO-rJ-MAo"/>
+                        <outlet property="passwordTextField" destination="wsd-ue-C8p" id="Rxc-7k-0Yv"/>
+                        <outlet property="registerOrLoginButton" destination="dmu-Ou-xhI" id="ePr-G4-p9l"/>
+                        <outlet property="registerOrLoginSegmentedControl" destination="nsN-CL-VFw" id="ZOC-bx-0aU"/>
                         <segue destination="moU-Oc-8xD" kind="show" identifier="Show Messages" id="vFJ-fc-I0q"/>
                     </connections>
                 </viewController>
@@ -173,6 +205,9 @@
         </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

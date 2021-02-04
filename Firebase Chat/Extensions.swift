@@ -19,8 +19,8 @@ extension UIViewController {
 }
 
 extension UITextField {
-    /// Returns true if the text field's text doesn't contain an empty string and isn't nil.
+    /// Returns true if the text field contains other characters than whitespaces and isn't nil.
     var containsText: Bool {
-        self.text != nil && self.text != ""
+        self.text != nil && (self.text?.filter({ $0 != " " }) != "")
     }
 }

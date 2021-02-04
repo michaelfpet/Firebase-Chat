@@ -27,7 +27,7 @@ class MessagesCollectionViewController: UICollectionViewController {
             bottom: Constants.containerViewHeight + Constants.CollectionViewBottomInset,
             right: 0)
         makeInputComponent()
-        addKeyboardObservers()
+        prepareForKeyboard()
         observeMessages()
     }
     
@@ -106,6 +106,7 @@ class MessagesCollectionViewController: UICollectionViewController {
     // MARK: - Logout
     
     @IBAction func logout(_ sender: UIBarButtonItem) {
+        view.endEditing(true)
         performSegue(
             withIdentifier: "Unwind To Login Screen", sender: self
         )
@@ -144,10 +145,17 @@ extension MessagesCollectionViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - UITextField
 extension MessagesCollectionViewController: UITextFieldDelegate {
     
-    /// Adds observers for when the keyboard gets shown or hidden.
-    func addKeyboardObservers() {
+    /// Adds observers for when the keyboard gets shown or hidden, and a gesture recognizer to remove keyboard when the viewgets tapped.
+    func prepareForKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     @objc func keyboardWillShow(notification: Notification) {
@@ -194,16 +202,13 @@ extension MessagesCollectionViewController {
     /// Sets up an obser to to add new messages whenever they apper in the database.
     func observeMessages() {
         let messagesRef = Database.database().reference().child(Constants.messagesString)
-        messagesRef.observe(.childAdded) { dataSnapshot in
+        messagesRef.observe(.childAdded) { [weak self] dataSnapshot in
             guard let messageDictionary = dataSnapshot.value as? [String: AnyObject] else { return }
             var message = Message()
             message.setValues(withDictionary: messageDictionary)
-            
-            self.messages.append(message)
-            
+            self?.messages.append(message)
             DispatchQueue.main.async {
-                self.collectionView.reloadData()
-
+                self?.collectionView.reloadData()
             }
         }
     }
