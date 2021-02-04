@@ -28,7 +28,16 @@ class MessagesCollectionViewController: UICollectionViewController {
             right: 0)
         makeInputComponent()
         prepareForKeyboard()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // Messages shouldn't be observed multiple times so all observings are stopped before a new one is instantiated.
+        stopObservingMessages()
         observeMessages()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        stopObservingMessages()
     }
     
     // MARK: - Input Component
@@ -181,6 +190,12 @@ extension MessagesCollectionViewController: UITextFieldDelegate {
 
 // MARK: - Firebase
 extension MessagesCollectionViewController {
+    
+    /// A reference to the location in the database where the messages are stored.
+    var observingRefferenceToFirebase: DatabaseReference {
+        Database.database().reference().child(Constants.messagesString)
+    }
+    
     /// Uploads the message written in the text field to the databse with a timestamp and the senders name.
     @objc private func sendMessage() {
         guard textField.containsText else { return }
@@ -201,8 +216,8 @@ extension MessagesCollectionViewController {
     
     /// Sets up an obser to to add new messages whenever they apper in the database.
     func observeMessages() {
-        let messagesRef = Database.database().reference().child(Constants.messagesString)
-        messagesRef.observe(.childAdded) { [weak self] dataSnapshot in
+        messages.removeAll(keepingCapacity: true)
+        observingRefferenceToFirebase.observe(.childAdded) { [weak self] dataSnapshot in
             guard let messageDictionary = dataSnapshot.value as? [String: AnyObject] else { return }
             var message = Message()
             message.setValues(withDictionary: messageDictionary)
@@ -211,6 +226,10 @@ extension MessagesCollectionViewController {
                 self?.collectionView.reloadData()
             }
         }
+    }
+    
+    func stopObservingMessages() {
+        observingRefferenceToFirebase.removeAllObservers()
     }
 }
 
