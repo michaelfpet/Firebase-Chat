@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="moU-Oc-8xD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2zf-7V-AFT">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -132,9 +132,19 @@
                             <outlet property="delegate" destination="moU-Oc-8xD" id="Rem-Kx-8IA"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="Y00-zP-M9A"/>
+                    <navigationItem key="navigationItem" id="Y00-zP-M9A">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="xac-Xb-6HE">
+                            <connections>
+                                <action selector="logout:" destination="moU-Oc-8xD" id="gMV-Od-L7x"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="CoS-Ht-uPC" kind="unwind" identifier="Unwind To Login Screen" unwindAction="unwindToLoginScreen:" id="7U8-sP-PcG"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uNt-ZH-Pm5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="CoS-Ht-uPC" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2024.6376811594205" y="99.776785714285708"/>
         </scene>

@@ -10,6 +10,9 @@ import Firebase
 
 class LoginViewController: UIViewController {
 
+    @IBAction func unwindToLoginScreen(_ segue: UIStoryboardSegue) {
+        
+    }
     
     @IBOutlet weak var NameTextField: UITextField! {
         didSet {

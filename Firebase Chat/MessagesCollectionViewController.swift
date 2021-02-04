@@ -102,6 +102,14 @@ class MessagesCollectionViewController: UICollectionViewController {
         BottomRect.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         BottomRect.topAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
     }
+    
+    // MARK: - Logout
+    
+    @IBAction func logout(_ sender: UIBarButtonItem) {
+        performSegue(
+            withIdentifier: "Unwind To Login Screen", sender: self
+        )
+    }
 }
 
 // MARK: - UICollectionViewDataSource
