@@ -72,7 +72,7 @@ class LoginViewController: UIViewController {
         Server.signInUser(withEmail: email, password: password) { (success) in
             if success {
                 Server.getUsernameForCurrentUser { (username) in
-                    self.username = username
+                    self.username = username // TODO Check for nil here!
                     self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
                     self.activityIndicator.stopAnimating()
                 }

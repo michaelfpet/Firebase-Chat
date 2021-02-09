@@ -50,26 +50,33 @@ struct Server {
     
     // MARK: - Username
     
-    /// A reference to where the users data is stored in the database.
-    private static var userReference: DatabaseReference? {
+    /// A reference to where the users document is stored in the database.
+    private static var userDocumentReference: DocumentReference? {
         if let user = Auth.auth().currentUser {
-            return Database.database().reference().child(Constants.usersString).child(user.uid)
+            return Firestore.firestore().collection(Constants.usersString).document(user.uid)
         } else {
             return nil
         }
     }
     
     static func setUsernameForCurrentUser(to username: String) {
-        userReference?.updateChildValues([Constants.userNameString: username])
+        userDocumentReference?.setData([Constants.userNameString : username])
     }
     
     // TODO find out what happens if there is asked for the username twice
     static func getUsernameForCurrentUser(completion: ((_ username: String?) -> ())?) {
-        if let ref = userReference {
-            ref.observeSingleEvent(of: .value) { (dataSnapshot) in
-                let nameDictionary = dataSnapshot.value as? [String: AnyObject]
-                let username = nameDictionary?[Constants.userNameString] as? String
-                completion?(username)
+        if let ref = userDocumentReference {
+            ref.getDocument { (document, error) in
+                if error != nil {
+                    print(error as Any)
+                }
+                if let document = document, document.exists {
+                    let value = document.data()?[Constants.userNameString] as? String
+                    completion?(value)
+                } else {
+                    print("The users document does not exist")
+                    completion?(nil)
+                }
             }
         } else {
             completion?(nil)
