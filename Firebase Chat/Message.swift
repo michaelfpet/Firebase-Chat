@@ -12,6 +12,18 @@ struct Message {
     var timestamp: Double?
     var text: String?
     
+    
+    /// Returns true if none of the message's properties are nil.
+    var hasValues: Bool {
+        if senderName != nil,
+           timestamp != nil,
+           text != nil {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     /// Returns a string composed of the senders name and when the message was send.
     var info: String {
         if let timestamp = timestamp {
