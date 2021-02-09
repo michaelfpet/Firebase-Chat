@@ -54,6 +54,13 @@ class LoginViewController: UIViewController {
               let name = nameTextField.text else {
             return
         }
+        Server.registerUser(withEmail: email, password: password, username: name) { (success) in
+            if success {
+                self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
+            }
+            self.activityIndicator.stopAnimating()
+        }
+        
         activityIndicator.startAnimating()
         Auth.auth().createUser(
             withEmail: email,
@@ -79,26 +86,16 @@ class LoginViewController: UIViewController {
             return
         }
         activityIndicator.startAnimating()
-        Auth.auth().signIn(
-            withEmail: email,
-            password: password
-        ) { (authResult, error) in
-            if error != nil {
-                print(error as Any)
-                self.activityIndicator.stopAnimating()
-                return
-            }
-            if let user = Auth.auth().currentUser {
-                let ref = Database.database().reference().child(Constants.usersString).child(user.uid)
-                ref.observeSingleEvent(of: .value) { (dataSnapshot) in
-                    guard let nameDictionary = dataSnapshot.value as? [String: AnyObject] else { return }
-                    let name = nameDictionary[Constants.userNameString] as? String
-                    self.username = name
-                    self.activityIndicator.stopAnimating()
+        Server.signInUser(withEmail: email, password: password) { (success) in
+            if success {
+                Server.getUsernameForCurrentUser { (username) in
+                    self.username = username
                     self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
+                    self.activityIndicator.stopAnimating()
                 }
+            } else {
+                self.activityIndicator.stopAnimating()
             }
-            self.activityIndicator.stopAnimating()
         }
     }
     

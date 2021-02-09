@@ -11,7 +11,7 @@ import Firebase
 struct Server {
     // MARK: - Authentication
     
-    static func registerUser(withEmail email: String, password: String, completion: ((_ didSucceed: Bool) -> ())?) {
+    static func registerUser(withEmail email: String, password: String, username: String, completion: ((_ didSucceed: Bool) -> ())?) {
         Auth.auth().createUser(
             withEmail: email,
             password: password
@@ -20,6 +20,7 @@ struct Server {
                 print(error as Any)
                 completion?(false)
             } else {
+                setUsernameForCurrentUser(to: username)
                 completion?(true)
             }
         }
