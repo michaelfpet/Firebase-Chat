@@ -6,14 +6,13 @@
 //
 
 import UIKit
-import Firebase
 
 class LoginViewController: UIViewController {
 
     var username: String?
     
     @IBAction func unwindToLoginScreen(_ segue: UIStoryboardSegue) {
-        try? Auth.auth().signOut()
+        Server.signOutUser()
     }
     
     override func viewDidLoad() {
@@ -56,26 +55,10 @@ class LoginViewController: UIViewController {
         }
         Server.registerUser(withEmail: email, password: password, username: name) { (success) in
             if success {
+                self.username = name
                 self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
             }
             self.activityIndicator.stopAnimating()
-        }
-        
-        activityIndicator.startAnimating()
-        Auth.auth().createUser(
-            withEmail: email,
-            password: password
-        ) { (authResult, error) in
-            self.activityIndicator.stopAnimating()
-            if error != nil {
-                print(error as Any)
-                return
-            }
-            guard let user = Auth.auth().currentUser else { return }
-            let ref = Database.database().reference().child(Constants.usersString).child(user.uid)
-            ref.updateChildValues([Constants.userNameString: name])
-            self.username = name
-            self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
         }
     }
     

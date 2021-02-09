@@ -6,9 +6,6 @@
 //
 
 import UIKit
-import Firebase
-
-
 
 class MessagesCollectionViewController: UICollectionViewController {
     
@@ -31,13 +28,11 @@ class MessagesCollectionViewController: UICollectionViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        // Messages shouldn't be observed multiple times so all observings are stopped before a new one is instantiated.
-        stopObservingMessages()
         observeMessages()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        stopObservingMessages()
+        Server.stopObservingNewMessages()
     }
     
     // MARK: - Input Component
@@ -190,46 +185,30 @@ extension MessagesCollectionViewController: UITextFieldDelegate {
 
 // MARK: - Firebase
 extension MessagesCollectionViewController {
-    
-    /// A reference to the location in the database where the messages are stored.
-    var observingRefferenceToFirebase: DatabaseReference {
-        Database.database().reference().child(Constants.messagesString)
-    }
-    
     /// Uploads the message written in the text field to the databse with a timestamp and the senders name.
     @objc private func sendMessage() {
         guard textField.containsText else { return }
-        let ref = Database.database().reference().child(Constants.messagesString)
-        let childRef = ref.childByAutoId()
-        
         let timestamp = Date.timeIntervalSinceReferenceDate as Double
-        
-        let values = [
-            Constants.messageString : textField.text!,
-            Constants.senderString : username,
-            Constants.timestampString : timestamp
-        ] as [String : Any]
-        childRef.updateChildValues(values)
+        let message = Message(
+            senderName: username,
+            timestamp: timestamp,
+            text: textField.text!)
+        Server.sendMessage(message)
         textField.text = ""
         textField.resignFirstResponder()
     }
     
     /// Sets up an obser to to add new messages whenever they apper in the database.
     func observeMessages() {
+        // Messages shouldn't be observed multiple times so all observings are stopped before a new one is instantiated.
+        Server.stopObservingNewMessages()
         messages.removeAll(keepingCapacity: true)
-        observingRefferenceToFirebase.observe(.childAdded) { [weak self] dataSnapshot in
-            guard let messageDictionary = dataSnapshot.value as? [String: AnyObject] else { return }
-            var message = Message()
-            message.setValues(withDictionary: messageDictionary)
-            self?.messages.append(message)
+        Server.observeMessages { [weak self] (message) in
             DispatchQueue.main.async {
+                self?.messages.append(message)
                 self?.collectionView.reloadData()
             }
         }
-    }
-    
-    func stopObservingMessages() {
-        observingRefferenceToFirebase.removeAllObservers()
     }
 }
 

@@ -40,6 +40,14 @@ struct Server {
         }
     }
     
+    static func signOutUser() {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print(error)
+        }
+    }
+    
     // MARK: - Username
     
     /// A reference to where the users data is stored in the database.
