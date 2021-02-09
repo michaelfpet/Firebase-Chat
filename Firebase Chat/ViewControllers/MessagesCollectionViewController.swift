@@ -205,7 +205,7 @@ extension MessagesCollectionViewController {
         messages.removeAll(keepingCapacity: true)
         Server.observeMessages { [weak self] (message) in
             DispatchQueue.main.async {
-                self?.messages.append(message)
+                self?.messages.append(contentsOf: message)
                 self?.collectionView.reloadData()
             }
         }

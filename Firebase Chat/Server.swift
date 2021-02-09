@@ -85,18 +85,22 @@ struct Server {
     
     // MARK: - Messages
     
+    /// The collection where the messages are stoed within
+    private static var messagesCollectionReference: CollectionReference {
+        Firestore.firestore().collection(Constants.messagesString)
+    }
+    
     /// Sends a message by uploading it to the database, but only if the message has a sender, timestamp and message.
     /// - Parameter message: The message to send.
     static func sendMessage(_ message: Message) {
         guard message.hasValues else { return }
-        let ref = Database.database().reference().child(Constants.messagesString)
-        let childRef = ref.childByAutoId()
+        let document = messagesCollectionReference.document()
         let values = [
             Constants.messageString : message.text!,
             Constants.senderString : message.senderName!,
             Constants.timestampString : message.timestamp!
         ] as [String : Any]
-        childRef.updateChildValues(values)
+        document.setData(values)
     }
     
     /// A reference to the location in the database where the messages are stored.
@@ -104,21 +108,30 @@ struct Server {
         Database.database().reference().child(Constants.messagesString)
     }
     
-    /// Calls the given block for every message in the database and once whenever a message is added to the database.
-    /// - Parameter block: The block to call whenever i message is added to the database.
-    /// - Parameter message: The message recived from the server.
-    static func observeMessages(with block: @escaping (_ message: Message) -> ()) {
-        observingRefferenceToFirebase.observe(.childAdded) { dataSnapshot in
-            guard let messageDictionary = dataSnapshot.value as? [String: AnyObject] else { return }
-            var message = Message()
-            message.setValues(withDictionary: messageDictionary)
-            if message.hasValues {
-                block(message)
+    static var listeners = [ListenerRegistration]()
+    
+    /// Calls the given block whener a message is added to the database and once with every message in the database when this is first called.
+    /// - Parameter block: The block to call whenever messages are recived.
+    /// - Parameter messages: The messages recived from the server.
+    static func observeMessages(with block: @escaping (_ messages: [Message]) -> ()) {
+        let listener = messagesCollectionReference.addSnapshotListener { (querySnapshot, error) in
+            if error != nil {
+                print(error as Any)
+                return
             }
+            var messages = [Message]()
+            guard querySnapshot != nil else { return }
+            for documentChange in querySnapshot!.documentChanges {
+                var message = Message()
+                message.setValues(withDictionary: documentChange.document.data())
+                if message.hasValues { messages.append(message) }
+            }
+            block(messages)
         }
+        listeners.append(listener)
     }
     static func stopObservingNewMessages() {
-        observingRefferenceToFirebase.removeAllObservers()
+        listeners.forEach { $0.remove() }
     }
 }
 
@@ -133,6 +146,7 @@ extension Server {
         /// The name of the key for the messages in the database.
         static let messagesString = "messages"
         
+        // The keys for the properties af a message stored in the database.
         static let senderString = Message.Constants.senderString
         static let timestampString = Message.Constants.timestampString
         static let messageString = Message.Constants.messageString
