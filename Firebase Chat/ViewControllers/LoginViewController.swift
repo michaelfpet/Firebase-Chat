@@ -21,6 +21,7 @@ class LoginViewController: UIViewController {
         emailTextField.delegate = self
         passwordTextField.delegate = self
         nameTextField.delegate = self
+        setTextFieldsText()
     }
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -57,6 +58,7 @@ class LoginViewController: UIViewController {
             if success {
                 self.username = name
                 self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
+                self.storeTextFieldsText()
             }
             self.activityIndicator.stopAnimating()
         }
@@ -74,6 +76,7 @@ class LoginViewController: UIViewController {
                 Server.getUsernameForCurrentUser { (username) in
                     self.username = username // TODO Check for nil here!
                     self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
+                    self.storeTextFieldsText()
                     self.activityIndicator.stopAnimating()
                 }
             } else {
@@ -144,12 +147,33 @@ extension LoginViewController: UITextFieldDelegate {
             break
         }
         return true
-        
+    }
+}
+
+extension LoginViewController {
+    /// Sets the text in the email text field and password text field from the the corresponding value saved in user defaults.
+    ///
+    /// Update these properties by calling storeTextFieldsText()
+    func setTextFieldsText() {
+        let userDefaults = UserDefaults.standard
+        emailTextField.text = userDefaults.string(forKey: Constants.emailKey)
+        passwordTextField.text = userDefaults.string(forKey: Constants.passwordKey)
+    }
+    /// Stores the text in email and password text field in user defaults.
+    func storeTextFieldsText() {
+        let userDefaults = UserDefaults.standard
+        userDefaults.setValue(emailTextField.text, forKey: Constants.emailKey)
+        userDefaults.setValue(passwordTextField.text, forKey: Constants.passwordKey)
     }
 }
 
 extension LoginViewController {
     struct Constants {
+        
+        /// the key for the last entered email in userDefaults
+        static let emailKey = "Email"
+        /// the key for the last entered password in userDefaults
+        static let passwordKey = "Password" // TODO, remove?
         
         static let showMessagesSegueID = "Show Messages"
         
