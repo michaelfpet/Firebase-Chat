@@ -83,6 +83,16 @@ struct Server {
         }
     }
     
+    // MARK: - User id
+    
+    static func getUID() -> String? {
+        if let user = Auth.auth().currentUser {
+            return user.uid
+        } else {
+            return nil
+        }
+    }
+    
     // MARK: - Messages
     
     /// The collection where the messages are stoed within
@@ -98,7 +108,8 @@ struct Server {
         let values = [
             Constants.messageString : message.text!,
             Constants.senderString : message.senderName!,
-            Constants.timestampString : message.timestamp!
+            Constants.timestampString : message.timestamp!,
+            Constants.senderUIDString : message.senderUID!
         ] as [String : Any]
         document.setData(values)
     }
@@ -150,5 +161,6 @@ extension Server {
         static let senderString = Message.Constants.senderString
         static let timestampString = Message.Constants.timestampString
         static let messageString = Message.Constants.messageString
+        static let senderUIDString = Message.Constants.senderUIDString
     }
 }

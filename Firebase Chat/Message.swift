@@ -11,13 +11,14 @@ struct Message {
     var senderName: String?
     var timestamp: Double?
     var text: String?
-    
+    var senderUID: String?
     
     /// Returns true if none of the message's properties are nil.
     var hasValues: Bool {
         if senderName != nil,
            timestamp != nil,
-           text != nil {
+           text != nil,
+           senderUID != nil {
             return true
         } else {
             return false
@@ -41,14 +42,17 @@ struct Message {
     /// This is a fail safe version of setValuesForKeys.
     mutating func setValues(withDictionary dictionary: [String: Any]) {
         // setValuesForKeys because it for some reason doesn't work. and this lets this be a struct instead of a class
-        if let senderName = dictionary["senderName"] as? String? {
+        if let senderName = dictionary[Constants.senderString] as? String? {
             self.senderName = senderName
         }
-        if let timestamp = dictionary["timestamp"] as? Double? {
+        if let timestamp = dictionary[Constants.timestampString] as? Double? {
             self.timestamp = timestamp
         }
-        if let text = dictionary["text"] as? String? {
+        if let text = dictionary[Constants.messageString] as? String? {
             self.text = text
+        }
+        if let senderUID = dictionary[Constants.senderUIDString] as? String? {
+            self.senderUID = senderUID
         }
     }
 }
@@ -59,5 +63,6 @@ extension Message {
         static let senderString = "senderName"
         static let timestampString = "timestamp"
         static let messageString = "text"
+        static let senderUIDString = "senderUID"
     }
 }

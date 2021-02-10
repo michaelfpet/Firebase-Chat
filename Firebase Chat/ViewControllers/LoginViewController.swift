@@ -10,6 +10,7 @@ import UIKit
 class LoginViewController: UIViewController {
 
     var username: String?
+    var uid: String?
     
     @IBAction func unwindToLoginScreen(_ segue: UIStoryboardSegue) {
         Server.signOutUser()
@@ -54,11 +55,15 @@ class LoginViewController: UIViewController {
               let name = nameTextField.text else {
             return
         }
+        activityIndicator.startAnimating()
         Server.registerUser(withEmail: email, password: password, username: name) { (success) in
             if success {
-                self.username = name
-                self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
-                self.storeTextFieldsText()
+                if let uid = Server.getUID() {
+                    self.uid = uid
+                    self.username = name
+                    self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
+                    self.storeTextFieldsText()
+                }
             }
             self.activityIndicator.stopAnimating()
         }
@@ -74,9 +79,14 @@ class LoginViewController: UIViewController {
         Server.signInUser(withEmail: email, password: password) { (success) in
             if success {
                 Server.getUsernameForCurrentUser { (username) in
-                    self.username = username // TODO Check for nil here!
-                    self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
-                    self.storeTextFieldsText()
+                    if let username = username {
+                        if let uid = Server.getUID() {
+                            self.uid = uid
+                            self.username = username
+                            self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
+                            self.storeTextFieldsText()
+                        }
+                    }
                     self.activityIndicator.stopAnimating()
                 }
             } else {
@@ -97,14 +107,13 @@ class LoginViewController: UIViewController {
                 self.setupForRegister()
             }
         }
-        
     }
     
-    func setupForLogin() {
+    private func setupForLogin() {
         registerOrLoginButton.setTitle("Login", for: .normal)
         nameTextField.isHidden = true
     }
-    func setupForRegister() {
+    private func setupForRegister() {
         registerOrLoginButton.setTitle("Register", for: .normal)
         nameTextField.isHidden = false
     }
@@ -117,6 +126,7 @@ class LoginViewController: UIViewController {
         if segue.identifier == Constants.showMessagesSegueID {
             if let messagesCVC = segue.destination.contents as? MessagesCollectionViewController {
                 // You shouldn't even try to segue unless the person has a name.
+                messagesCVC.uid = uid!
                 messagesCVC.username = username!
             }
         }
@@ -126,7 +136,7 @@ class LoginViewController: UIViewController {
 
 // MARK: - UITextField
 extension LoginViewController: UITextFieldDelegate {
-    func prepareKeyboard() {
+    private func prepareKeyboard() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
     }

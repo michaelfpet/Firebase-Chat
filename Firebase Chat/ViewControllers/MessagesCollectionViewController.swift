@@ -9,7 +9,8 @@ import UIKit
 
 class MessagesCollectionViewController: UICollectionViewController {
     
-    var username = "Michael"
+    var username = ""
+    var uid = ""
     
     var messages = [Message]()
     
@@ -131,7 +132,7 @@ extension MessagesCollectionViewController {
             messageCell.senderAndTimeLabel.text = message.info
             messageCell.messageLabel.text = message.text
             
-            messageCell.isTrailing = username == message.senderName
+            messageCell.isTrailing = uid == message.senderUID
             messageCell.messageWidth = view.frame.width * Constants.messageWidthRatio
         }
         return cell
@@ -192,7 +193,8 @@ extension MessagesCollectionViewController {
         let message = Message(
             senderName: username,
             timestamp: timestamp,
-            text: textField.text!)
+            text: textField.text!,
+            senderUID: uid)
         Server.sendMessage(message)
         textField.text = ""
         textField.resignFirstResponder()
