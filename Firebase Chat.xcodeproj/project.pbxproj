@@ -19,7 +19,7 @@
 		F9097D2C25CAF69900645067 /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9097D2B25CAF69900645067 /* MessageCollectionViewCell.swift */; };
 		F9097D4525CC03F400645067 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9097D4425CC03F400645067 /* Extensions.swift */; };
 		F9097D4825CC203C00645067 /* MessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9097D4725CC203C00645067 /* MessageLabel.swift */; };
-		F9169AFC25D290C60095297E /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9169AFB25D290C60095297E /* Server.swift */; };
+		F9169AFC25D290C60095297E /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9169AFB25D290C60095297E /* Database.swift */; };
 		F9169B2125D2F4370095297E /* MessagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9169B2025D2F4370095297E /* MessagesCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +40,7 @@
 		F9097D2B25CAF69900645067 /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCell.swift; sourceTree = "<group>"; };
 		F9097D4425CC03F400645067 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F9097D4725CC203C00645067 /* MessageLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLabel.swift; sourceTree = "<group>"; };
-		F9169AFB25D290C60095297E /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		F9169AFB25D290C60095297E /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		F9169B2025D2F4370095297E /* MessagesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,7 +99,7 @@
 				F9097D4425CC03F400645067 /* Extensions.swift */,
 				F9097CC925CACD7400645067 /* Main.storyboard */,
 				F9097D2B25CAF69900645067 /* MessageCollectionViewCell.swift */,
-				F9169AFB25D290C60095297E /* Server.swift */,
+				F9169AFB25D290C60095297E /* Database.swift */,
 				F9097D4725CC203C00645067 /* MessageLabel.swift */,
 				F9097D2525CAEE4F00645067 /* Message.swift */,
 				F9097CDA25CAD4ED00645067 /* GoogleService-Info.plist */,
@@ -250,7 +250,7 @@
 				F9097D2625CAEE4F00645067 /* Message.swift in Sources */,
 				F9169B2125D2F4370095297E /* MessagesCollectionViewController.swift in Sources */,
 				F9097CC625CACD7400645067 /* SceneDelegate.swift in Sources */,
-				F9169AFC25D290C60095297E /* Server.swift in Sources */,
+				F9169AFC25D290C60095297E /* Database.swift in Sources */,
 				F9097D4525CC03F400645067 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

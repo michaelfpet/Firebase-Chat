@@ -13,7 +13,7 @@ class LoginViewController: UIViewController {
     var uid: String?
     
     @IBAction func unwindToLoginScreen(_ segue: UIStoryboardSegue) {
-        Server.signOutUser()
+        Database.signOutUser()
     }
     
     override func viewDidLoad() {
@@ -56,9 +56,9 @@ class LoginViewController: UIViewController {
             return
         }
         activityIndicator.startAnimating()
-        Server.registerUser(withEmail: email, password: password, username: name) { (success) in
+        Database.registerUser(withEmail: email, password: password, username: name) { (success) in
             if success {
-                if let uid = Server.getUID() {
+                if let uid = Database.getUID() {
                     self.uid = uid
                     self.username = name
                     self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)
@@ -76,11 +76,11 @@ class LoginViewController: UIViewController {
             return
         }
         activityIndicator.startAnimating()
-        Server.signInUser(withEmail: email, password: password) { (success) in
+        Database.signInUser(withEmail: email, password: password) { (success) in
             if success {
-                Server.getUsernameForCurrentUser { (username) in
+                Database.getUsernameForCurrentUser { (username) in
                     if let username = username {
-                        if let uid = Server.getUID() {
+                        if let uid = Database.getUID() {
                             self.uid = uid
                             self.username = username
                             self.performSegue(withIdentifier: Constants.showMessagesSegueID, sender: self)

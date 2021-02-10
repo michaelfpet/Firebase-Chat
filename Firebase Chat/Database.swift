@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 
-struct Server {
+struct Database {
     // MARK: - Authentication
     
     static func registerUser(withEmail email: String, password: String, username: String, completion: ((_ didSucceed: Bool) -> ())?) {
@@ -141,7 +141,7 @@ struct Server {
     }
 }
 
-extension Server {
+extension Database {
     struct Constants {
         /// The key for the users in the database.
         static let usersString = "users"

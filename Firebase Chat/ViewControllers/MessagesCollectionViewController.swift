@@ -33,7 +33,7 @@ class MessagesCollectionViewController: UICollectionViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        Server.stopObservingNewMessages()
+        Database.stopObservingNewMessages()
     }
     
     // MARK: - Input Component
@@ -195,7 +195,7 @@ extension MessagesCollectionViewController {
             timestamp: timestamp,
             text: textField.text!,
             senderUID: uid)
-        Server.sendMessage(message)
+        Database.sendMessage(message)
         textField.text = ""
         textField.resignFirstResponder()
     }
@@ -203,9 +203,9 @@ extension MessagesCollectionViewController {
     /// Sets up an obser to to add new messages whenever they apper in the database.
     func observeMessages() {
         // Messages shouldn't be observed multiple times so all observings are stopped before a new one is instantiated.
-        Server.stopObservingNewMessages()
+        Database.stopObservingNewMessages()
         messages.removeAll(keepingCapacity: true)
-        Server.observeMessages { [weak self] (message) in
+        Database.observeMessages { [weak self] (message) in
             DispatchQueue.main.async {
                 self?.messages.append(contentsOf: message)
                 self?.collectionView.reloadData()
