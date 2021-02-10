@@ -63,7 +63,7 @@ struct Server {
         userDocumentReference?.setData([Constants.userNameString : username])
     }
     
-    // TODO find out what happens if there is asked for the username twice
+    // TODO find out what happens if there is asked for the username twice? This could happen if the user changes his name.
     static func getUsernameForCurrentUser(completion: ((_ username: String?) -> ())?) {
         if let ref = userDocumentReference {
             ref.getDocument { (document, error) in
@@ -114,12 +114,7 @@ struct Server {
         document.setData(values)
     }
     
-    /// A reference to the location in the database where the messages are stored.
-    private static var observingRefferenceToFirebase: DatabaseReference {
-        Database.database().reference().child(Constants.messagesString)
-    }
-    
-    static var listeners = [ListenerRegistration]()
+    private static var listeners = [ListenerRegistration]()
     
     /// Calls the given block whener a message is added to the database and once with every message in the database when this is first called.
     /// - Parameter block: The block to call whenever messages are recived.
